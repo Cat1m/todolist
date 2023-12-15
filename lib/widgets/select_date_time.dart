@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
+import 'package:todolist_riverpod/utils/utils.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,7 @@ class SelectDateTime extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final date = ref.watch(dateProvider);
-    final time = ref.watch(dateProvider);
+    final time = ref.watch(timeProvider);
 
     return Row(
       children: [
@@ -31,10 +32,10 @@ class SelectDateTime extends ConsumerWidget {
         Expanded(
           child: CommonTextField(
             title: 'Time',
-            hintText: '$time',
+            hintText: Helpers.timeToString(time),
             readOnly: true,
             suffixIcon: IconButton(
-              onPressed: () => _selectTime(context),
+              onPressed: () => _selectTime(context, ref),
               icon: const FaIcon(FontAwesomeIcons.clock),
             ),
           ),
@@ -43,14 +44,14 @@ class SelectDateTime extends ConsumerWidget {
     );
   }
 
-  void _selectTime(BuildContext context) async {
+  void _selectTime(BuildContext context, WidgetRef ref) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
 
     if (pickedTime != null) {
-      print(pickedTime);
+      ref.read(timeProvider.notifier).state = pickedTime;
     }
   }
 
