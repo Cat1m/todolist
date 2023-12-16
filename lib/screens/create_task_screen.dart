@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_riverpod/config/routes/routes.dart';
+import 'package:todolist_riverpod/data/data.dart';
+import 'package:todolist_riverpod/providers/date_provider.dart';
+import 'package:todolist_riverpod/providers/providers.dart';
+import 'package:todolist_riverpod/utils/helpers.dart';
 import 'package:todolist_riverpod/widgets/display_white_text.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class CreateTaskScreen extends ConsumerStatefulWidget {
   static CreateTaskScreen builder(BuildContext context, GoRouterState state) =>
@@ -67,8 +73,23 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
   void _createTask() async {
     final title = _titleController.text.trim();
     final note = _noteController.text.trim();
-    if (title.isEmpty) {
-      print('empty Title');
+    final date = ref.watch(dateProvider);
+    final time = ref.watch(timeProvider);
+    final category = ref.watch(categoryProvider);
+
+    if (title.isNotEmpty) {
+      final task = Task(
+        title: title,
+        note: note,
+        time: Helpers.timeToString(time),
+        date: DateFormat.yMMMd().format(date),
+        category: category,
+        isCompleted: false,
+      );
+
+      await ref.read(taskProvider.notifier).createTask(task).then((value) {
+        context.go(RouteLocation.home);
+      });
     }
   }
 }
