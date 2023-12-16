@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_riverpod/config/routes/routes.dart';
 import 'package:todolist_riverpod/data/data.dart';
+import 'package:todolist_riverpod/providers/providers.dart';
 import 'package:todolist_riverpod/utils/task_categories.dart';
 import 'package:todolist_riverpod/utils/utils.dart';
 import 'package:gap/gap.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   static HomeScreen builder(BuildContext context, GoRouterState state) =>
       const HomeScreen();
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colorScheme;
     final deviceSize = context.deviceSize;
+    final taskState = ref.watch(taskProvider);
 
     return Scaffold(
       body: Stack(
@@ -54,25 +57,8 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const DisplayListOfTasks(
-                      tasks: [
-                        Task(
-                          title: "title",
-                          note: "note",
-                          time: "9:42",
-                          date: "12/14/2023",
-                          category: TaskCategories.orthers,
-                          isCompleted: false,
-                        ),
-                        Task(
-                          title: "title 2 title 2title 2title 2 ",
-                          note: "note",
-                          time: "9:42",
-                          date: "12/14/2023",
-                          category: TaskCategories.shopping,
-                          isCompleted: false,
-                        ),
-                      ],
+                    DisplayListOfTasks(
+                      tasks: taskState.tasks,
                     ),
                     const Gap(20),
                     Text(
@@ -80,25 +66,8 @@ class HomeScreen extends StatelessWidget {
                       style: context.textThem.headlineMedium,
                     ),
                     const Gap(20),
-                    const DisplayListOfTasks(
-                      tasks: [
-                        Task(
-                          title: "title",
-                          note: "note",
-                          time: "9:42",
-                          date: "12/14/2023",
-                          category: TaskCategories.work,
-                          isCompleted: true,
-                        ),
-                        Task(
-                          title: "title 2 title 2title 2title 2 ",
-                          note: "note",
-                          time: "9:42",
-                          date: "12/14/2023",
-                          category: TaskCategories.personal,
-                          isCompleted: true,
-                        ),
-                      ],
+                    DisplayListOfTasks(
+                      tasks: taskState.tasks,
                       isCompletedTasks: true,
                     ),
                     const Gap(20),

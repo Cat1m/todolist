@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum TaskCategories {
@@ -10,6 +11,16 @@ enum TaskCategories {
   social(Icons.people, Colors.brown),
   travel(Icons.flight, Colors.yellow),
   work(Icons.work, Colors.teal);
+
+  static TaskCategories stringToCategory(String name) {
+    try {
+      return TaskCategories.values.firstWhere(
+        (category) => category.name == name,
+      );
+    } catch (e) {
+      return TaskCategories.orthers;
+    }
+  }
 
   final IconData icon;
   final Color color;
