@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todolist_riverpod/config/routes/routes.dart';
 import 'package:todolist_riverpod/data/data.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
-import 'package:todolist_riverpod/utils/task_categories.dart';
 import 'package:todolist_riverpod/utils/utils.dart';
 import 'package:gap/gap.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';

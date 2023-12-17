@@ -1,58 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_riverpod/data/data.dart';
+import 'package:todolist_riverpod/providers/providers.dart';
+import 'package:todolist_riverpod/utils/app_alerts.dart';
 import 'package:todolist_riverpod/utils/extensions.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DisplayListOfTasks extends StatelessWidget {
+class DisplayListOfTasks extends ConsumerWidget {
   const DisplayListOfTasks({
     super.key,
-    required this.tasks,
     this.isCompletedTasks = false,
+    required this.tasks,
   });
-
-  final List<Task> tasks;
   final bool isCompletedTasks;
+  final List<Task> tasks;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final deviceSize = context.deviceSize;
     final height =
         isCompletedTasks ? deviceSize.height * 0.25 : deviceSize.height * 0.3;
-    final emptyTasksMessage = isCompletedTasks
-        ? 'There is no comleted task yet'
-        : 'There is no task todo!';
+    final emptyTasksAlert = isCompletedTasks
+        ? 'There is no completed task yet'
+        : 'There is no task to todo!';
 
     return CommonContainer(
       height: height,
       child: tasks.isEmpty
           ? Center(
               child: Text(
-                emptyTasksMessage,
+                emptyTasksAlert,
                 style: context.textThem.headlineSmall,
               ),
             )
           : ListView.separated(
+              shrinkWrap: true,
               itemCount: tasks.length,
               padding: EdgeInsets.zero,
-              shrinkWrap: true,
               itemBuilder: (ctx, index) {
                 final task = tasks[index];
+
                 return InkWell(
-                    onLongPress: () {},
-                    onTap: () async {
-                      await showModalBottomSheet(
-                          context: context,
-                          builder: (ctx) {
-                            return TaskDetails(task: task);
-                          });
+                  onLongPress: () async {
+                    await AppAlerts.showAlertDeleteDialog(
+                      context: context,
+                      ref: ref,
+                      task: task,
+                    );
+                  },
+                  onTap: () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      builder: (ctx) {
+                        return TaskDetails(task: task);
+                      },
+                    );
+                  },
+                  child: TaskTile(
+                    task: task,
+                    onCompleted: (value) async {
+                      await ref
+                          .read(taskProvider.notifier)
+                          .updateTask(task)
+                          .then((value) {
+                        AppAlerts.displaySnackbar(
+                          context,
+                          task.isCompleted
+                              ? 'Task incompleted'
+                              : 'Task completed',
+                        );
+                      });
                     },
-                    child: TaskTitle(task: task));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  thickness: 1.5,
+                  ),
                 );
               },
+              separatorBuilder: (context, index) => const Divider(
+                thickness: 1.5,
+              ),
             ),
     );
   }

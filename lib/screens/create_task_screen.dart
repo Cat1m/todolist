@@ -4,6 +4,7 @@ import 'package:todolist_riverpod/data/data.dart';
 import 'package:todolist_riverpod/providers/date_provider.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
 import 'package:todolist_riverpod/utils/app_alerts.dart';
+import 'package:todolist_riverpod/utils/extensions.dart';
 import 'package:todolist_riverpod/utils/helpers.dart';
 import 'package:todolist_riverpod/widgets/display_white_text.dart';
 import 'package:go_router/go_router.dart';
@@ -13,12 +14,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class CreateTaskScreen extends ConsumerStatefulWidget {
-  static CreateTaskScreen builder(BuildContext context, GoRouterState state) =>
+  static CreateTaskScreen builder(
+    BuildContext context,
+    GoRouterState state,
+  ) =>
       const CreateTaskScreen();
   const CreateTaskScreen({super.key});
 
   @override
-  ConsumerState<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CreateTaskScreenState();
 }
 
 class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
@@ -34,10 +39,14 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const DisplayWhiteText(text: 'Add New Task'),
+        backgroundColor: colors.primary,
+        title: const DisplayWhiteText(
+          text: 'Add New Task',
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -47,29 +56,28 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CommonTextField(
+                hintText: 'Task Title',
                 title: 'Task Title',
-                hintText: 'Input task title',
                 controller: _titleController,
               ),
-              const Gap(16),
-              const SelectCategory(),
+              const Gap(30),
+              const CategoriesSelection(),
+              const Gap(30),
               const SelectDateTime(),
-              const Gap(16),
+              const Gap(30),
               CommonTextField(
-                title: 'Note',
-                hintText: 'Input task note',
+                hintText: 'Notes',
+                title: 'Notes',
                 maxLines: 6,
                 controller: _noteController,
               ),
-              const Gap(60),
+              const Gap(30),
               ElevatedButton(
-                onPressed: () {
-                  _createTask();
-                },
+                onPressed: _createTask,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: DisplayWhiteText(
-                    text: 'save',
+                    text: 'Save',
                   ),
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:todolist_riverpod/config/routes/routes.dart';
-import 'package:todolist_riverpod/screens/create_task_screen.dart';
-import 'package:todolist_riverpod/screens/home_screens.dart';
+import 'package:todolist_riverpod/config/config.dart';
+
+import 'package:todolist_riverpod/screens/screens.dart';
 
 final appRoutes = [
   GoRoute(
