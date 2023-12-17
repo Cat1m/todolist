@@ -63,7 +63,7 @@ class DisplayListOfTasks extends ConsumerWidget {
                           .read(taskProvider.notifier)
                           .updateTask(task)
                           .then((value) {
-                        AppAlerts.displaySnackbar(
+                        AppAlerts.displayToast(
                           context,
                           task.isCompleted
                               ? 'Task incompleted'

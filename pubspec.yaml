@@ -25,6 +25,7 @@ dev_dependencies:
   path: ^1.8.3
   sqflite: ^2.3.0
   flutter_launcher_icons: ^0.13.1
+  fluttertoast: ^8.2.4
 
 flutter:
   uses-material-design: true

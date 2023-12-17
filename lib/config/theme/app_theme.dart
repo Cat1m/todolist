@@ -8,7 +8,7 @@ class AppTheme {
 
   static final light = FlexThemeData.light(
     //useMaterial3: true,
-    scheme: FlexScheme.indigo,
+    scheme: FlexScheme.indigoM3,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
     blendLevel: 40,
     appBarStyle: FlexAppBarStyle.primary,
@@ -35,6 +35,7 @@ class AppTheme {
       blendOnColors: true,
       blendTextTheme: true,
       popupMenuOpacity: 0.95,
+      //elevatedButtonSchemeColor: SchemeColor.onPrimaryContainer,
     ),
   );
 }

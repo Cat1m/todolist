@@ -5,6 +5,7 @@ import 'package:todolist_riverpod/data/data.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todolist_riverpod/data/models/task.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @immutable
 class AppAlerts {
@@ -22,6 +23,14 @@ class AppAlerts {
     );
   }
 
+  static displayToast(BuildContext context, String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
+  }
+
   static Future<void> showAlertDeleteDialog({
     required BuildContext context,
     required WidgetRef ref,
@@ -35,7 +44,7 @@ class AppAlerts {
       onPressed: () async {
         await ref.read(taskProvider.notifier).deleteTask(task).then(
           (value) {
-            displaySnackbar(
+            displayToast(
               context,
               'Task deleted successfully',
             );
