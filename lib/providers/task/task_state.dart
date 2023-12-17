@@ -4,7 +4,9 @@ import 'package:todolist_riverpod/data/models/task.dart';
 class TaskState extends Equatable {
   final List<Task> tasks;
 
-  const TaskState(this.tasks);
+  const TaskState({
+    required this.tasks,
+  });
   const TaskState.initial({
     this.tasks = const [],
   });
@@ -13,7 +15,7 @@ class TaskState extends Equatable {
     List<Task>? tasks,
   }) {
     return TaskState(
-      tasks ?? this.tasks,
+      tasks: tasks ?? this.tasks,
     );
   }
 

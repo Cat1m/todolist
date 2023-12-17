@@ -3,6 +3,7 @@ import 'package:todolist_riverpod/config/routes/routes.dart';
 import 'package:todolist_riverpod/data/data.dart';
 import 'package:todolist_riverpod/providers/date_provider.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
+import 'package:todolist_riverpod/utils/app_alerts.dart';
 import 'package:todolist_riverpod/utils/helpers.dart';
 import 'package:todolist_riverpod/widgets/display_white_text.dart';
 import 'package:go_router/go_router.dart';
@@ -62,7 +63,17 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
               ),
               const Gap(60),
               ElevatedButton(
-                  onPressed: () {}, child: const DisplayWhiteText(text: 'save'))
+                onPressed: () {
+                  _createTask();
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: DisplayWhiteText(
+                    text: 'save',
+                  ),
+                ),
+              ),
+              const Gap(30),
             ],
           ),
         ),
@@ -73,23 +84,25 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
   void _createTask() async {
     final title = _titleController.text.trim();
     final note = _noteController.text.trim();
-    final date = ref.watch(dateProvider);
     final time = ref.watch(timeProvider);
+    final date = ref.watch(dateProvider);
     final category = ref.watch(categoryProvider);
-
     if (title.isNotEmpty) {
       final task = Task(
         title: title,
-        note: note,
+        category: category,
         time: Helpers.timeToString(time),
         date: DateFormat.yMMMd().format(date),
-        category: category,
+        note: note,
         isCompleted: false,
       );
 
       await ref.read(taskProvider.notifier).createTask(task).then((value) {
+        AppAlerts.displaySnackbar(context, 'Task create successfully');
         context.go(RouteLocation.home);
       });
+    } else {
+      AppAlerts.displaySnackbar(context, 'Title cannot be empty');
     }
   }
 }

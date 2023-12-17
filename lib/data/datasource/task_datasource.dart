@@ -5,7 +5,9 @@ import 'package:todolist_riverpod/utils/utils.dart';
 
 class TaskDatasource {
   static final TaskDatasource _instace = TaskDatasource._();
+
   factory TaskDatasource() => _instace;
+
   TaskDatasource._() {
     _initDB();
   }
@@ -20,6 +22,7 @@ class TaskDatasource {
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, DBKeys.dbName);
+
     return openDatabase(
       path,
       version: 1,
@@ -27,18 +30,18 @@ class TaskDatasource {
     );
   }
 
-  Future<void> _onCreate(Database db, int version) async {
+  void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE ${DBKeys.dbTable}(
-        ${DBKeys.idColumn} INTEGER PRIMARY KEY AUTOINCREMENT,
-        ${DBKeys.titleColumn} TEXT,
-        ${DBKeys.noteColumn} TEXT,
-        ${DBKeys.dateColumn} TEXT,
-        ${DBKeys.timeColumn} TEXT,
-        ${DBKeys.categoryColumn} TEXT,
-        ${DBKeys.isCompletedColumn} INTEGER
+      CREATE TABLE ${DBKeys.dbTable} (
+        ${TaskKeys.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${TaskKeys.title} TEXT,
+        ${TaskKeys.note} TEXT,
+        ${TaskKeys.date} TEXT,
+        ${TaskKeys.time} TEXT,
+        ${TaskKeys.category} TEXT,
+        ${TaskKeys.isCompleted} INTEGER
       )
-      ''');
+    ''');
   }
 
   Future<int> addTask(Task task) async {

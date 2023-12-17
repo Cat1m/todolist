@@ -2,21 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:todolist_riverpod/utils/extensions.dart';
 
 class CommonContainer extends StatelessWidget {
-  const CommonContainer({super.key, this.child, this.height});
-
+  const CommonContainer({
+    super.key,
+    this.child,
+    this.height,
+    this.width,
+    this.color,
+    this.borderRadius = 16,
+    this.padding,
+  });
   final Widget? child;
   final double? height;
+  final double? width;
+  final Color? color;
+  final double borderRadius;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = context.deviceSize;
+    final colors = context.colorScheme;
 
     return Container(
-      width: deviceSize.width,
       height: height,
+      width: width,
+      padding: padding,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: context.colorScheme.primaryContainer,
+        color: color ?? colors.primaryContainer,
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: child,
     );

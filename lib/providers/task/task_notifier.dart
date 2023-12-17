@@ -6,6 +6,7 @@ import 'package:todolist_riverpod/providers/providers.dart';
 
 class TaskNotifier extends StateNotifier<TaskState> {
   final TaskRepository _repository;
+
   TaskNotifier(this._repository) : super(const TaskState.initial()) {
     getTasks();
   }
