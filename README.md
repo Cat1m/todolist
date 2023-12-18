@@ -1,3 +1,3 @@
-# todolist_riverpod
+# todolist
 
-A new Flutter project.
+Flutter use riverpod
