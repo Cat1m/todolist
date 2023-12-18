@@ -1,12 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:todolist_riverpod/config/routes/routes.dart';
 import 'package:todolist_riverpod/data/data.dart';
-import 'package:todolist_riverpod/providers/date_provider.dart';
 import 'package:todolist_riverpod/providers/providers.dart';
 import 'package:todolist_riverpod/utils/app_alerts.dart';
 import 'package:todolist_riverpod/utils/extensions.dart';
 import 'package:todolist_riverpod/utils/helpers.dart';
-import 'package:todolist_riverpod/widgets/display_white_text.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todolist_riverpod/widgets/widgets.dart';
 import 'package:gap/gap.dart';

@@ -41,7 +41,10 @@ class HomeScreen extends ConsumerWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  const DisplayWhiteText(text: 'My Todo List', size: 40),
+                  const DisplayWhiteText(
+                    text: 'My Todo List',
+                    size: 40,
+                  ),
                 ],
               ),
             ),
@@ -60,19 +63,19 @@ class HomeScreen extends ConsumerWidget {
                     DisplayListOfTasks(
                       tasks: inCompletedTasks,
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     Text(
                       'Completed',
                       style: context.textThem.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     DisplayListOfTasks(
                       isCompletedTasks: true,
                       tasks: completedTasks,
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     ElevatedButton(
                       onPressed: () => context.push(RouteLocation.createTask),
                       child: const Padding(

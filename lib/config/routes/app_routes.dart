@@ -5,6 +5,10 @@ import 'package:todolist_riverpod/screens/screens.dart';
 
 final appRoutes = [
   GoRoute(
+      path: RouteLocation.mainscreen,
+      parentNavigatorKey: navigationKey,
+      builder: MainScreen.builder),
+  GoRoute(
       path: RouteLocation.home,
       parentNavigatorKey: navigationKey,
       builder: HomeScreen.builder),

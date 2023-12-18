@@ -7,7 +7,7 @@ final navigationKey = GlobalKey<NavigatorState>();
 
 final routesProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: RouteLocation.home,
+    initialLocation: RouteLocation.mainscreen,
     navigatorKey: navigationKey,
     routes: appRoutes,
   );
