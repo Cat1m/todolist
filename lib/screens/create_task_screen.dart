@@ -71,7 +71,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
                 controller: _noteController,
               ),
               const Gap(30),
-              ElevatedButton(
+              FilledButton(
                 onPressed: _createTask,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

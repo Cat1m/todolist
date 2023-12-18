@@ -21,18 +21,22 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainScreenState extends ConsumerState<MainScreen> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const CreateTaskScreen()
+    const CreateTaskScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     var navIndex = ref.watch(navProvider);
     return Scaffold(
-      body: Center(child: _widgetOptions[navIndex.index]),
+      body: Center(
+        child: _widgetOptions[navIndex.index],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navIndex.index,
         onDestinationSelected: (value) {
-          ref.read(navProvider.notifier).onIndexChanged(value);
+          ref.read(navProvider.notifier).onIndexChanged(
+                value,
+              );
         },
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         elevation: 0,
